@@ -30,6 +30,9 @@ steps:
     repository: 'vdc-aspnet-core-sqldb'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+    tags: |
+      $(Build.BuildId)
+      latest
 
 - task: Docker@2
   displayName: 'docker push'
