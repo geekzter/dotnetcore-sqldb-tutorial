@@ -27,7 +27,7 @@ steps:
   displayName: 'docker build'
   inputs:
     containerRegistry: 'ewdev'
-    repository: 'vdc'
+    repository: 'vdc-aspnet-core-sqldb'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
 
@@ -35,5 +35,5 @@ steps:
   displayName: 'docker push'
   inputs:
     containerRegistry: 'ewdev'
-    repository: 'vdc'
+    repository: 'vdc-aspnet-core-sqldb'
     command: 'push'
