@@ -17,7 +17,23 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet publish $(buildConfiguration)'
   inputs:
     command: 'publish'
     publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration)'
 
+- task: Docker@2
+  displayName: 'docker build'
+  inputs:
+    containerRegistry: 'ewdev'
+    repository: 'vdc'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+
+- task: Docker@2
+  displayName: 'docker build'
+  inputs:
+    containerRegistry: 'ewdev'
+    repository: 'vdc'
+    command: 'push'
