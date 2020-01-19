@@ -32,7 +32,7 @@ steps:
     Dockerfile: '**/Dockerfile'
 
 - task: Docker@2
-  displayName: 'docker build'
+  displayName: 'docker push'
   inputs:
     containerRegistry: 'ewdev'
     repository: 'vdc'
