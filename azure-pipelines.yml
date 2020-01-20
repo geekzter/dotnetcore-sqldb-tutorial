@@ -37,7 +37,7 @@ steps:
 - task: ArchiveFiles@2
   displayName: 'Create ZipDeploy package'
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/ZipDeploy.zip'
