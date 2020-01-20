@@ -12,11 +12,9 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet build $(buildConfiguration)'
-  inputs:
-    command: 'build'
-    arguments: '--configuration $(buildConfiguration)'
+steps:
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: '.NET Core build $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: '.NET Core publish $(buildConfiguration)'
