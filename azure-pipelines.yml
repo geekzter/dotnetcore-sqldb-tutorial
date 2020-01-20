@@ -49,3 +49,5 @@ steps:
     targetPath: '$(Pipeline.Workspace)'
     artifact: 'aspnetcoresql'
     publishLocation: 'pipeline'
+
+
