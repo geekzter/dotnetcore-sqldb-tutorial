@@ -51,3 +51,10 @@ steps:
     publishLocation: 'pipeline'
 
 
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Microsoft Azure Internal Consumption Eric van Wijk (84c1a2c7-585a-4753-ad28-97f69618cf12)'
+    appType: 'webApp'
+    appName: 'vdc-dev-paasapp-updj-appsvc-app'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
