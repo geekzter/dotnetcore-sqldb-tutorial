@@ -28,8 +28,22 @@ namespace DotNetCoreSqlDb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<MyDatabaseContext>(options =>
-                    options.UseSqlite("Data Source=localdatabase.db"));
+
+            string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (environment == "Production" || environment == "Test")
+            {
+                services.AddDbContext<MyDatabaseContext>(options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+            }
+            else
+            {
+                services.AddDbContext<MyDatabaseContext>(options =>
+                        options.UseSqlite("Data Source=localdatabase.db"));
+
+                // Automatically perform database migration
+                services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
+            }
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

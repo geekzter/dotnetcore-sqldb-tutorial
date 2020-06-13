@@ -11,7 +11,7 @@ namespace DotNetCoreSqlDb.Models
         public MyDatabaseContext (DbContextOptions<MyDatabaseContext> options)
             : base(options)
         {
-            var conn = Database.GetDbConnection() as System.Data.SqlClient.SqlConnection;
+            var conn = Database.GetDbConnection() as Microsoft.Data.SqlClient.SqlConnection;
             if (conn != null) {
                 string clientId = Environment.GetEnvironmentVariable("APP_CLIENT_ID");
                 Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider tokenProvider;
