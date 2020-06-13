@@ -41,7 +41,7 @@ namespace DotNetCoreSqlDb
                         options.UseSqlite("Data Source=localdatabase.db"));
 
                 // Automatically perform database migration
-                services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
+                //services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
             }
 
         }
