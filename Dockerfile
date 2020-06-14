@@ -13,4 +13,4 @@ EXPOSE 443
 WORKDIR /app
 COPY --from=build /app ./
 COPY --from=build /source/localdatabase.db  ./
-ENTRYPOINT ["dotnet", "DotNetCoreSqlDb.dll", "--environment=Development"]
+ENTRYPOINT ["dotnet", "DotNetCoreSqlDb.dll"]

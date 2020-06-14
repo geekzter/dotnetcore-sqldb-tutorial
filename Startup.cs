@@ -30,10 +30,15 @@ namespace DotNetCoreSqlDb
             services.AddControllersWithViews();
 
             string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (String.IsNullOrEmpty(environment))
+                throw new InvalidOperationException("Environment variable ASPNETCORE_ENVIRONMENT should be set, aborting");
             if (environment == "Production" || environment == "Test")
             {
+                string connectionString = Configuration.GetConnectionString("MyDbConnection");
+                if (String.IsNullOrEmpty(connectionString))
+                    throw new InvalidOperationException("Connection string MyDbConnection should be set, aborting");
                 services.AddDbContext<MyDatabaseContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+                        options.UseSqlServer(connectionString));
             }
             else
             {

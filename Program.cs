@@ -23,6 +23,7 @@ namespace DotNetCoreSqlDb
                 .ConfigureLogging(logging =>
                 {
                     logging.AddAzureWebAppDiagnostics();
+                    logging.AddConsole();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
