@@ -7,7 +7,10 @@ COPY . .
 RUN dotnet publish -c release -o /app 
 
 # Final stage/image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
+EXPOSE 80
+EXPOSE 443
 WORKDIR /app
 COPY --from=build /app ./
+COPY --from=build /source/localdatabase.db  ./
 ENTRYPOINT ["dotnet", "DotNetCoreSqlDb.dll", "--environment=Development"]
