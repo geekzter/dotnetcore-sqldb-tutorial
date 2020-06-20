@@ -30,11 +30,13 @@ namespace DotNetCoreSqlDb
             services.AddControllersWithViews();
 
             string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            Console.WriteLine("ASPNETCORE_ENVIRONMENT: " + environment);
             if (String.IsNullOrEmpty(environment))
                 throw new InvalidOperationException("Environment variable ASPNETCORE_ENVIRONMENT should be set, aborting");
             if (environment == "Production" || environment == "Test")
             {
                 string connectionString = Configuration.GetConnectionString("MyDbConnection");
+                Console.WriteLine("MyDbConnection: " + connectionString);
                 if (String.IsNullOrEmpty(connectionString))
                     throw new InvalidOperationException("Connection string MyDbConnection should be set, aborting");
                 services.AddDbContext<MyDatabaseContext>(options =>
@@ -48,6 +50,9 @@ namespace DotNetCoreSqlDb
                 // Automatically perform database migration
                 //services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
             }
+
+            Console.WriteLine("APP_CLIENT_ID: " + Environment.GetEnvironmentVariable("APP_CLIENT_ID"));
+
 
         }
 

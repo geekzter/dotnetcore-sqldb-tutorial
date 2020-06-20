@@ -34,4 +34,4 @@ if (!$ConnectionString) {
 
 $Name = "$((Get-Item (Split-Path -parent -Path $MyInvocation.MyCommand.Path)).Name) $HostingEnvironment".ToLower() -replace "\W",""
 
-docker run -d -p ${HttpPort}:80 --name $Name -e APP_CLIENT_ID $ClientId -e ASPNETCORE_ENVIRONMENT=$HostingEnvironment -e ConnectionStrings:MyDbConnection=$ConnectionString $Image
+docker run -d -p ${HttpPort}:80 --name $Name -e APP_CLIENT_ID=$ClientId -e ASPNETCORE_ENVIRONMENT=$HostingEnvironment -e ConnectionStrings:MyDbConnection=$ConnectionString $Image
