@@ -28,6 +28,7 @@ namespace DotNetCoreSqlDb
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("https://+:443;http://+:80");
                 });
     }
 }
