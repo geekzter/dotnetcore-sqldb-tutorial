@@ -33,6 +33,6 @@ if (!$ConnectionString) {
     }
 }
 
-$Name = "$((Get-Item (Split-Path -parent -Path $MyInvocation.MyCommand.Path)).Name) $HostingEnvironment".ToLower() -replace "\W",""
-
-docker run -d -p ${HttpPort}:${InternalHttpPort} --name $Name -e APP_CLIENT_ID=$ClientId -e ASPNETCORE_ENVIRONMENT=$HostingEnvironment -e ASPNETCORE_URLS="http://+:$InternalHttpPort" -e ConnectionStrings:MyDbConnection=$ConnectionString $Image
+$name = "$((Get-Item (Split-Path -parent -Path $MyInvocation.MyCommand.Path)).Name) $HostingEnvironment".ToLower() -replace "\W",""
+$urlSpec = "http://+:$InternalHttpPort"
+docker run -d -p ${HttpPort}:${InternalHttpPort} --name $Name -e APP_CLIENT_ID=$ClientId -e ASPNETCORE_ENVIRONMENT=$HostingEnvironment -e ASPNETCORE_URLS=$urlSpec -e APPSETTING_ASPNETCORE_URLS=$urlSpec -e ConnectionStrings:MyDbConnection=$ConnectionString $Image
