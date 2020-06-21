@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using DotNetCoreSqlDb.Models;
+using System.Collections;
 
 namespace DotNetCoreSqlDb
 {
@@ -29,14 +30,19 @@ namespace DotNetCoreSqlDb
         {
             services.AddControllersWithViews();
 
-            string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            Console.WriteLine("ASPNETCORE_ENVIRONMENT: " + environment);
-            if (String.IsNullOrEmpty(environment))
+            Console.WriteLine();
+            Console.WriteLine("Environment variables: ");
+
+
+            foreach (DictionaryEntry envVar in Environment.GetEnvironmentVariables())
+                Console.WriteLine(" {0} : {1}", envVar.Key, envVar.Value);
+
+            string aspEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (String.IsNullOrEmpty(aspEnvironment))
                 throw new InvalidOperationException("Environment variable ASPNETCORE_ENVIRONMENT should be set, aborting");
-            if (environment == "Production" || environment == "Test")
+            if (aspEnvironment == "Production" || aspEnvironment == "Test")
             {
                 string connectionString = Configuration.GetConnectionString("MyDbConnection");
-                Console.WriteLine("MyDbConnection: " + connectionString);
                 if (String.IsNullOrEmpty(connectionString))
                     throw new InvalidOperationException("Connection string MyDbConnection should be set, aborting");
                 services.AddDbContext<MyDatabaseContext>(options =>
@@ -50,9 +56,6 @@ namespace DotNetCoreSqlDb
                 // Automatically perform database migration
                 //services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
             }
-
-            Console.WriteLine("APP_CLIENT_ID: " + Environment.GetEnvironmentVariable("APP_CLIENT_ID"));
-
 
         }
 
