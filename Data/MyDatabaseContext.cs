@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Azure.Services.AppAuthentication;
 
 namespace DotNetCoreSqlDb.Models
 {
@@ -20,11 +21,11 @@ namespace DotNetCoreSqlDb.Models
                 {
                     // User assigned identity requires the Client ID to be specified, see:
                     // https://docs.microsoft.com/en-us/azure/key-vault/service-to-service-authentication#connection-string-support
-                    tokenProvider = new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider("RunAs=App;AppId=" + clientId);
+                    tokenProvider = new AzureServiceTokenProvider("RunAs=App;AppId=" + clientId);
                 }
                 else
                 {
-                    tokenProvider = new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider();
+                    tokenProvider = new AzureServiceTokenProvider();
                 }
 
                 // Get AAD token when using SQL Database
