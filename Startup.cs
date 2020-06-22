@@ -40,22 +40,26 @@ namespace DotNetCoreSqlDb
             string aspEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (String.IsNullOrEmpty(aspEnvironment))
                 throw new InvalidOperationException("Environment variable ASPNETCORE_ENVIRONMENT should be set, aborting");
-            if (aspEnvironment == "Production" || aspEnvironment == "Test")
-            {
-                string connectionString = Configuration.GetConnectionString("MyDbConnection");
-                if (String.IsNullOrEmpty(connectionString))
-                    throw new InvalidOperationException("Connection string MyDbConnection should be set, aborting");
-                services.AddDbContext<MyDatabaseContext>(options =>
-                        options.UseSqlServer(connectionString));
-            }
-            else
-            {
-                services.AddDbContext<MyDatabaseContext>(options =>
-                        options.UseSqlite("Data Source=localdatabase.db"));
 
-                // Automatically perform database migration
-                //services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
+            switch (aspEnvironment)
+            {
+                case "Development":
+                case "Offline":
+                    services.AddDbContext<MyDatabaseContext>(options =>
+                            options.UseSqlite("Data Source=localdatabase.db"));
+                    break;
+
+                default:
+                    string connectionString = Configuration.GetConnectionString("MyDbConnection");
+                    if (String.IsNullOrEmpty(connectionString))
+                        throw new InvalidOperationException("Connection string MyDbConnection should be set, aborting");
+                    services.AddDbContext<MyDatabaseContext>(options =>
+                            options.UseSqlServer(connectionString));
+                    break;
             }
+
+            // Automatically perform database migration
+            //services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
 
         }
 
